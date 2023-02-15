@@ -47,3 +47,22 @@ def our_gd(loss, beta, lr=0.1, n_steps=50):
         beta_list.append(beta.clone())
     return loss_hist, beta_list
 
+
+def plot_gd_trajectory(theta_list, loss):
+    """Plot the trajectory of gradient descent."""
+    # Concatenate theta_list into a tensor of shape (n_steps+1, 2) and make into a numpy array
+    theta_tensor = torch.stack(theta_list).detach().numpy()
+
+    # Plot a scatter plot of the rows of theta_tensor
+    fig, ax = plt.subplots(figsize=(6, 6))
+    ax.scatter(theta_tensor[: , 0], theta_tensor[: , 1], s=20, c='r')
+
+    # Add line scatter plot of the rows of theta_tensor
+    ax.plot(theta_tensor[: , 0], theta_tensor[: , 1], c='r')
+
+    # Plot the countours of the loss function
+    plot_contours(loss, (-3, 5), (-4, 4), ax, levels=20)
+    
+    # ax.set_xlabel(r'$\theta_1$')
+    # ax.set_ylabel(r'$\theta_2$')
+    return ax
