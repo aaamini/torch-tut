@@ -7,5 +7,6 @@ Winter 2023 Course:
 - [Logistic regression](W23/logistic_regression.ipynb): Logistic regression on synthetic data, using gradient descent with and without momentum 
 - [Logistic regression: Breast Cancer data](W23/breast_cancer.ipynb)
 - [Nadaraya--Watson regression/classifier](W23/nw_in_pytorch.ipynb): An implementation of NW in the style of PyTorch, as a class derived from `nn.Module` 
+- [Softmax regression](W23/softmax_regression.ipynb): Softmax regression on synthetic data.
 
 
