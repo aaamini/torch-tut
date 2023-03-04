@@ -150,3 +150,17 @@ def plot_gd_3d_trajectory(theta_tensor):
 
 
 
+# def train(model, train_loader, optimizer, criterion, device):
+#     """Train a model on a training set."""
+#     model.train()
+#     train_loss = 0
+#     for batch_idx, (data, target) in enumerate(train_loader):
+#         data, target = data.to(device), target.to(device)
+#         optimizer.zero_grad()
+#         output = model(data)
+#         loss = criterion(output, target)
+#         loss.backward()
+#         optimizer.step()
+#         train_loss += loss.item()
+#     train_loss /= len(train_loader.dataset)
+#     return train_loss
