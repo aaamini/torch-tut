@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 import numpy as np
 import pandas as pd
 import torch
+from pathlib import Path
 
 # def load_mnist(batch_size=128, valid_size=0.2, shuffle=True, random_seed=42):
 #     """Load the MNIST dataset and split it into training and validation sets."""
@@ -55,9 +56,13 @@ def load_mnist(batch_size=128, shuffle=True):
 
     return trainloader, testloader
 
-def load_breast_cancer():
-    df = pd.read_csv('../data/breast_cancer.csv')
-    train_idx = pd.read_csv('../data/breast_cancer_train_indices.csv')['train_idx'].to_numpy()
+def load_breast_cancer(data_path = None):
+    if data_path is None:
+        # data_path = '../data/'
+        data_path = Path(__file__).parent.parent / 'data/'
+
+    df = pd.read_csv(data_path / 'breast_cancer.csv')
+    train_idx = pd.read_csv(data_path / 'breast_cancer_train_indices.csv')['train_idx'].to_numpy()
 
     # Select features 
     df = df[['radius_mean', 'texture_mean', 'diagnosis']]

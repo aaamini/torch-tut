@@ -18,4 +18,15 @@ class NW(nn.Module):
         weights = self.kernel(dist)
         # return torch.sum(weights * self.y_train, dim=1) / torch.sum(weights, dim=1) 
         return (weights @ self.y_train) / (weights @ torch.ones_like(self.y_train))
+    
+# A dense layer
+class Dense(nn.Module):
+    def __init__(self, input_dim, output_dim, activation=torch.tanh):
+        super().__init__()
+        self.fc = nn.Linear(input_dim, output_dim)
+        self.activation = activation
+        
+    def forward(self, x):
+        x = self.fc(x)
+        return self.activation(x)
 

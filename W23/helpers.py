@@ -105,6 +105,31 @@ def gd_with_momentum(loss, beta, momentum=0, lr=0.1, n_steps=50):
     return loss_hist, beta_list
 
 
+def gd_with_momentum2(model, loss_fn, momentum=0, lr=0.1, n_steps=50):
+    """Perform gradient descent on a loss function."""
+    loss_hist = np.zeros(n_steps)
+    z_list = []
+    for i, param in enumerate(model.parameters()):
+        z_list.append(torch.zeros_like(param))
+   
+    for i in range(n_steps):
+        curr_loss = loss_fn(model)
+        loss_hist[i] = curr_loss.item()
+
+        curr_loss.backward()
+
+        with torch.no_grad():
+            for i, param in enumerate(model.parameters()):
+                z_list[i] = momentum * z_list[i] + param.grad
+                param -= lr * z_list[i] 
+               
+
+        for param in model.parameters():
+            param.grad.zero_()
+
+    return loss_hist
+
+
 def plot_gd_trajectory(theta_list, loss, xrange=(-5, 5), yrange=(-5, 5),
                        ax=None, figsize=(6, 6)):
     """Plot the trajectory of gradient descent."""
@@ -149,6 +174,29 @@ def plot_gd_3d_trajectory(theta_tensor):
     fig.show()
 
 
+def train(model, loss_fn, n_steps=1000, lr=0.1, momentum=0.9, optimizer=None):
+    """Train a model using gradient descent."""
+    # Create an optimizer
+    if optimizer is None:
+        optim = torch.optim.SGD(model.parameters(), lr=lr, momentum=momentum)
+    else:
+        optim = optimizer(model.parameters(), lr=lr)
+
+    # Run gradient descent
+    loss_hist = []
+    for iter in range(n_steps):
+        # Compute the loss
+        loss = loss_fn(model)
+        # Compute the gradient of the loss
+        loss.backward()
+        # Update the parameters
+        optim.step()
+        # Set the gradient to zero
+        optim.zero_grad()
+        # Save the loss
+        loss_hist.append(loss.item())
+
+    return loss_hist
 
 # def train(model, train_loader, optimizer, criterion, device):
 #     """Train a model on a training set."""
