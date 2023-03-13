@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import torch
 
 @torch.no_grad()
-def plot_decision_bounary(model, X, y, ax=None, figsize=(6, 6)):
+def plot_decision_level_sets(model, X, y, ax=None, figsize=(6, 6)):
     """Plot the decision boundary of a model."""
 
     if ax is None:
