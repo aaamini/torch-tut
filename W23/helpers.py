@@ -37,8 +37,8 @@ def plot_points(y, X, ax=None, figsize=(6, 6)):
         fig, ax = plt.subplots(figsize=figsize)
 
     idx = y.flatten() == 1
-    ax.scatter(X[idx,0], X[idx,1], label='1', alpha=.75, s=20)
     ax.scatter(X[~idx,0], X[~idx,1], label='0', alpha=.75, s=20) 
+    ax.scatter(X[idx,0], X[idx,1], label='1', alpha=.75, s=20)
 
 # Plot contours of a 2D function
 def plot_contours(func, xrange, yrange, ax=None, levels=20, logscale=True, 

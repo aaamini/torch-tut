@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.nn import functional as F
 
 # implement the Nadaraya-Watson kernel regression in PyTorch
 class NW(nn.Module):
@@ -30,3 +31,13 @@ class Dense(nn.Module):
         x = self.fc(x)
         return self.activation(x)
 
+
+# torch class for softmax regression
+class SoftmaxRegression(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super().__init__()
+        self.linear = nn.Linear(input_dim, output_dim)
+        # self.unused_linear = nn.Linear(input_dim, 10)
+        
+    def forward(self, x):
+        return F.softmax(self.linear(x), dim=1)
